@@ -1,0 +1,45 @@
+---
+- name: epel
+  yum: name=epel-release state=latest
+- name: yum update
+  yum: name=* state=latest
+- name: yum install
+  yum: name={{item}} state=latest enablerepo=epel
+  with_items:
+    - autoconf
+    - automake
+    - bison-devel
+    - bzip2
+    - bzip2-devel
+    - curl-devel
+    - gcc
+    - gcc-c++
+    - git
+    - libffi-devel
+    - libxml2-devel
+    - libxslt-devel
+    - libyaml-devel
+    - libjpeg-devel
+    - libpng-devel
+    - make
+    - nodejs
+    - npm
+    - openssl-devel
+    - patch
+    - postfix
+    - readline-devel
+    - sqlite-devel
+    - sudo
+    - tar
+    - unzip
+    - v8-devel
+    - yacc
+    - zip
+    - zlib-devel
+    - ImageMagick-devel
+- name: switch mta
+  shell: alternatives --set mta /usr/sbin/sendmail.postfix
+- name: stop sendmail
+  service: name=sendmail state=stopped enabled=no
+- name: service postfix
+  service: name=postfix state=started enabled=yes

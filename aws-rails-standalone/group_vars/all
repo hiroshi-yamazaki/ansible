@@ -1,0 +1,3 @@
+rbenv_root: /opt/rbenv
+ruby_version: 2.2.4
+bundler_version: 1.10.6

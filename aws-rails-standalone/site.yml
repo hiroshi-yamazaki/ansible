@@ -1,0 +1,10 @@
+---
+- name: Install rbenv nginx mysql redis postfix
+  sudo: yes
+  remote_user: ec2-user
+  roles:
+    - common
+    - redis
+    - nginx
+    - mysql
+    - ruby

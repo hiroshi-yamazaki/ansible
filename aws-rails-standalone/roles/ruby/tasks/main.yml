@@ -1,0 +1,17 @@
+---
+- name: rbenv
+  git: repo=https://github.com/rbenv/rbenv.git dest={{rbenv_root}} clone=yes
+- name: ruby-build
+  git: repo=https://github.com/rbenv/ruby-guild.git dest={{rbenv_root}}/plugins/ruby-build clone=yes
+- name: rbenv
+  template: src=rbenv.sh dest=/etc/profile.d/
+- name: install ruby
+  shell: source /etc/profile.d/rbenv.sh; rbenv install {{ruby_version}}
+- name: rehash
+  shell: source /etc/profile.d/rbenv.sh; rbenv rehash
+- name: rbenv global
+  shell: source /etc/profile.d/rbenv.sh; rbenv global {{ruby_version}}
+- name: install bundler
+  shell: source /etc/profile.d/rbenv.sh; gem install bundler -v {{bundler_version}}
+- name: rehash
+  shell: source /etc/profile.d/rbenv.sh; rbenv rehash
