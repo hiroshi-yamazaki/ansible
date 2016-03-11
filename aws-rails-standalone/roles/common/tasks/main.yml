@@ -9,6 +9,7 @@
     - autoconf
     - automake
     - bison-devel
+    - byacc
     - bzip2
     - bzip2-devel
     - curl-devel
@@ -33,7 +34,6 @@
     - tar
     - unzip
     - v8-devel
-    - yacc
     - zip
     - zlib-devel
     - ImageMagick-devel
@@ -41,5 +41,9 @@
   shell: alternatives --set mta /usr/sbin/sendmail.postfix
 - name: stop sendmail
   service: name=sendmail state=stopped enabled=no
-- name: service postfix
-  service: name=postfix state=started enabled=yes
+- name: service postfix ntpd ntpdate
+  service: name={{item}} state=started enabled=yes
+  with_items:
+    - postfix
+    - ntpd
+    - ntpdate

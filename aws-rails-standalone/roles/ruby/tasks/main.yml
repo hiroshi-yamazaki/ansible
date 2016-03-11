@@ -2,7 +2,7 @@
 - name: rbenv
   git: repo=https://github.com/rbenv/rbenv.git dest={{rbenv_root}} clone=yes
 - name: ruby-build
-  git: repo=https://github.com/rbenv/ruby-guild.git dest={{rbenv_root}}/plugins/ruby-build clone=yes
+  git: repo=https://github.com/rbenv/ruby-build.git dest={{rbenv_root}}/plugins/ruby-build clone=yes
 - name: rbenv
   template: src=rbenv.sh dest=/etc/profile.d/
 - name: install ruby
