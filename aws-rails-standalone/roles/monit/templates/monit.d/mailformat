@@ -1,0 +1,9 @@
+set mail-format {
+     from: {{ monit_alert_from }}
+  subject: monit alert ({{ monit_alert_host }}) --  $EVENT $SERVICE
+  message: $EVENT Service $SERVICE
+                Date:        $DATE
+                Action:      $ACTION
+                Host:        $HOST
+                Description: $DESCRIPTION
+}

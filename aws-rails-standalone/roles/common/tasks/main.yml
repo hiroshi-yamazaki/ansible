@@ -4,7 +4,7 @@
 - name: yum update
   yum: name=* state=latest
 - name: yum install
-  yum: name={{item}} state=latest enablerepo=epel
+  yum: name={{ item }} state=latest enablerepo=epel
   with_items:
     - autoconf
     - automake
@@ -42,8 +42,16 @@
 - name: stop sendmail
   service: name=sendmail state=stopped enabled=no
 - name: service postfix ntpd ntpdate
-  service: name={{item}} state=started enabled=yes
+  service: name={{ item }} state=started enabled=yes
   with_items:
     - postfix
     - ntpd
     - ntpdate
+- name: /etc/sysconfig/clock
+  template: src=clock dest=/etc/sysconfig/
+- name: localtime
+  shell: rm /etc/localtime; ln -sf /usr/share/zoneinfo/{{ timezone }} /etc/localtime
+- name: logrotate
+  template: src=logrotate.conf dest=/etc/
+- name: logrotate rails_app
+  template: src=logrotate.d/rails_app dest=/etc/logrotate.d/{{ app_name }}

@@ -1,9 +1,16 @@
 ---
 - name: Install mysql
-  yum: name={{item}} state=latest
+  yum: name={{ item }} state=latest
   with_items:
     - mysql56
     - mysql56-devel
     - mysql56-server
+    - MySQL-python27
 - name: service mysql
   service: name=mysqld state=started enabled=yes
+- name: mysql_tzinfo_to_sql
+  shell: mysql_tzinfo_to_sql --leap /usr/share/zoneinfo | mysql -u root mysql
+- name: create db
+  mysql_db: state=present name={{ mysql_db_name }} encoding=utf8 login_user=root login_host={{ mysql_db_host }}
+- name: create db user
+  mysql_user: state=present name={{ mysql_db_user }} password={{ mysql_db_pass }} priv={{ mysql_db_name }}.*:ALL host={{ mysql_allow_host }}

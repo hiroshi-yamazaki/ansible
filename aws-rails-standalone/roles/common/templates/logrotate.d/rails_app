@@ -1,0 +1,13 @@
+/var/www/{{ app_name }}/shared/log/*log {
+  create 0644 ec2-user ec2-user
+  daily
+  dateext
+  rotate {{ logrotate_rails_keeps }}
+  missing ok
+  notifempty
+  compress
+  sharedscripts
+  postrotate
+    /etc/init.d/puma phased-restart
+  endscript
+}

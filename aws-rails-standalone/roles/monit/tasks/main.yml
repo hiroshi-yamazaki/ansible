@@ -1,0 +1,15 @@
+---
+- name: install monit
+  yum: name=monit state=latest enablerepo=epel
+- name: service monit
+  service: name=monit state=started enabled=yes
+- name: set monit.conf
+  template: src=monit.conf dest=/etc/monit.conf
+- name: set monit.d/*
+  template: src=monit.d/{{ item }} dest=/etc/monit.d/
+  with_items:
+    - logging
+    - mailformat
+    - nginx
+    - puma
+    - resource
