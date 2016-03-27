@@ -1,0 +1,5 @@
+export PHPBREW_ROOT={{ phpbrew_root }}
+export PHPBREW_HOME={{ phpbrew_home }}
+export PHPBREW_LOOKUP_PREFIX=
+export PHPBREW_PHP=php-{{ php_version }}
+export PHPBREW_PATH={{ phpbrew_root }}/php/php-{{ php_version }}/bin

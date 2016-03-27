@@ -1,0 +1,12 @@
+---
+- hosts: yamazaki-aws
+  become: true
+  remote_user: ec2-user
+  roles:
+    - common
+    - php
+    #- redis
+    #- nginx
+    #- mysql
+    #- ruby
+    #- monit

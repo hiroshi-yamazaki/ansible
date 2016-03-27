@@ -1,0 +1,21 @@
+---
+- name: php-cli
+  yum: name=php56-cli state=latest enablerepo=epel
+- name: phpbrew
+  get_url: url=https://github.com/phpbrew/phpbrew/raw/master/phpbrew dest=/usr/local/bin/phpbrew mode=755
+- name: phpbrew chmod
+  file: path=/usr/local/bin/phpbrew state=touch mode=0755
+- name: phpbrew init
+  shell: PHPBREW_ROOT={{ phpbrew_root }} PHPBREW_HOME={{ phpbrew_home }} /usr/local/bin/phpbrew init
+- name: phpbrew.sh
+  template: src=profile.d/phpbrew.sh dest=/etc/profile.d/
+- name: phpbrew version installed?
+  shell: find {{ phpbrew_root }}/php/ -name "php-{{ php_version }}" -exec echo 1 \;
+  register: php_is_installed
+- name: phpbrew install
+  shell: PHPBREW_ROOT={{ phpbrew_root }} PHPBREW_HOME={{ phpbrew_home }} /usr/local/bin/phpbrew install {{ php_version }} +default +fpm +openssl=/usr -- --with-libdir=lib64
+  when: php_is_installed >= 1
+- name: phpbrew switch
+  shell: PHPBREW_ROOT={{ phpbrew_root }} PHPBREW_HOME={{ phpbrew_home }} /usr/local/bin/phpbrew switch {{ php_version }}
+- name: put init file
+  template: src=init dest=/opt/phpbrew/
