@@ -10,7 +10,7 @@
   register: rbenv_is_installed
 - name: install ruby
   shell: source /etc/profile.d/rbenv.sh; rbenv install {{ ruby_version }}
-  when: rbenv_is_installed == 0
+  when: rbenv_is_installed.stdout == "0"
 - name: rehash
   shell: source /etc/profile.d/rbenv.sh; rbenv rehash
 - name: rbenv global
