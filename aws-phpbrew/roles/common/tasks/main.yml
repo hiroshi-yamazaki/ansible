@@ -15,7 +15,11 @@
     - curl-devel
     - gcc
     - gcc-c++
+    - gd-devel
     - git
+    - krb5-devel
+    - libmcrypt-devel
+    - libgcrypt-devel
     - libffi-devel
     - libxml2-devel
     - libxslt-devel
@@ -23,17 +27,16 @@
     - libjpeg-devel
     - libpng-devel
     - make
-    - nodejs
-    - npm
     - openssl-devel
     - patch
     - postfix
     - readline-devel
-    - sqlite-devel
     - sudo
     - tar
     - unzip
-    - v8-devel
+    - vim-enhanced
+    - w3m
+    - wget
     - zip
     - zlib-devel
     - ImageMagick-devel
@@ -53,5 +56,3 @@
   shell: rm /etc/localtime; ln -sf /usr/share/zoneinfo/{{ timezone }} /etc/localtime
 - name: logrotate
   template: src=logrotate.conf dest=/etc/
-- name: logrotate rails_app
-  template: src=logrotate.d/rails_app dest=/etc/logrotate.d/{{ app_name }}

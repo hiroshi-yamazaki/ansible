@@ -1,0 +1,3 @@
+ZONE="{{ timezone }}"
+UTC=false
+ARC=false

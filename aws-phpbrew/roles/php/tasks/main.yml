@@ -1,0 +1,24 @@
+---
+- name: php-cli
+  yum: name={{ item }} state=latest enablerepo=epel
+  with_items:
+    - php56-cli
+    - mysql56
+    - mysql56-devel
+    - MySQL-python27
+- name: phpbrew
+  get_url: url=https://github.com/phpbrew/phpbrew/raw/master/phpbrew dest=/usr/local/bin/phpbrew mode=0755
+- name: phpbrew init
+  shell: PHPBREW_ROOT={{ phpbrew_root }} PHPBREW_HOME={{ phpbrew_home }} /usr/local/bin/phpbrew init
+- name: phpbrew.sh
+  template: src=profile.d/phpbrew.sh dest=/etc/profile.d/
+- name: phpbrew version installed?
+  shell: test -d {{ phpbrew_root }}/php/php-{{ php_version }} && echo 1 || echo 0
+  register: php_is_installed
+- name: phpbrew install
+  shell: PHPBREW_ROOT={{ phpbrew_root }} PHPBREW_HOME={{ phpbrew_home }} /usr/local/bin/phpbrew install {{ php_version }} +default +mysql +fpm +openssl=/usr -- --with-libdir=lib64
+  when: php_is_installed.stdout.find("0") == 0
+- name: phpbrew switch
+  shell: PHPBREW_ROOT={{ phpbrew_root }} PHPBREW_HOME={{ phpbrew_home }} /usr/local/bin/phpbrew switch {{ php_version }}
+- name: put init file
+  template: src=init dest=/opt/phpbrew/

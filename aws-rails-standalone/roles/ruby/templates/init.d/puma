@@ -1,0 +1,88 @@
+#!/bin/bash
+#
+# chkconfig:2345 85 15
+# description: puma
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+NAME=puma
+USER=ec2-user
+
+RBENV_ROOT={{ rbenv_root }}
+RBENV_VERSION={{ ruby_version }}
+
+RAILS_ENV={{ rails_env }}
+RACK_ENV={{ rails_env }}
+CAP_ROOT=/var/www/{{ app_name }}/
+SECRET_KEY_FILE=/etc/profile.d/rails_key.sh
+
+APP_ROOT=${CAP_ROOT}/current
+PUMA_CONF=${CAP_ROOT}/shared/puma.rb
+PUMA_STATE=${CAP_ROOT}/shared/tmp/pids/puma.state
+PID=${CAP_ROOT}/shared/tmp/pids/puma.pid
+
+RBENV_EXEC="${RBENV_ROOT}/bin/rbenv exec"
+BUNDLE_EXEC="${RBENV_EXEC} bundle exec"
+
+if [ -f ${SECRET_KEY_FILE} ];
+then
+  . ${SECRET_KEY_FILE}
+fi
+
+PUMA_ENV="RAILS_ENV=${RAILS_ENV} RACK_ENV=${RACK_ENV} RBENV_ROOT=${RBENV_ROOT} RBENV_VERSION=${RBENV_VERSION}"
+
+start() {
+    su ${USER} -c "cd ${APP_ROOT} && (${PUMA_ENV} ${BUNDLE_EXEC} puma -C ${PUMA_CONF} --daemon)"
+}
+
+stop() {
+    su ${USER} -c "cd ${APP_ROOT} && (${PUMA_ENV} ${BUNDLE_EXEC} pumactl -S ${PUMA_STATE} stop)"
+}
+
+phased-restart() {
+    su ${USER} -c "cd ${APP_ROOT} && (${PUMA_ENV} ${BUNDLE_EXEC} pumactl -S ${PUMA_STATE} phased-restart)"
+}
+
+restart() {
+    su ${USER} -c "cd ${APP_ROOT} && (${PUMA_ENV} ${BUNDLE_EXEC} pumactl -S ${PUMA_STATE} restart)"
+}
+
+status() {
+    su ${USER} -c "cd ${APP_ROOT} && (${PUMA_ENV} ${BUNDLE_EXEC} pumactl -S ${PUMA_STATE} status)"
+}
+
+rh_status() {
+    if [ `test -f ${PID}` and `test "/usr/bin/env kill -0 $( cat ${PID} )"` ];
+    then
+        return
+    else
+        return 1
+    fi
+}
+
+case "$1" in
+    start)
+        rh_status && (echo "process is already started"; exit 1)
+        start
+        ;;
+    stop)
+        rh_status || (echo "process is already stopped"; exit 1)
+        stop
+        ;;
+    phased-restart)
+        rh_status || (echo "process is already stopped"; exit 1)
+        phased-restart
+        ;;
+    restart)
+        rh_status || (echo "process is already stopped"; exit 1)
+        restart
+        ;;
+    status)
+        status
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|phased-restart|restart|status}"
+        exit 2
+        ;;
+esac

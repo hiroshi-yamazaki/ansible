@@ -1,16 +1,13 @@
-rbenv_root: /opt/rbenv
-ruby_version: 2.2.3
-bundler_version: 1.10.6
-rails_env: production
-rails_secret_key_base:
+phpbrew_root: /opt/phpbrew
+phpbrew_home: /opt/phpbrew
+php_version: 7.0.4
 timezone: Asia/Tokyo
-app_name: must-buy-system
-nginx_server_name: 
+nginx_server_name:
 nginx_ssl_certificate: server.pem
 nginx_ssl_certificate_key: server.key
-mysql_db_name: 
-mysql_db_user: 
-mysql_db_pass: 
+mysql_db_name:
+mysql_db_user:
+mysql_db_pass:
 mysql_db_host: localhost
 mysql_allow_host: localhost
 monit_alert_email: root@localhost

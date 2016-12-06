@@ -1,0 +1,5 @@
+check process puma with pidfile "/var/www/{{ app_name }}/shared/tmp/pids/puma.pid"
+  start program = "/etc/init.d/puma start"
+  stop program = "/etc/init.d/puma stop"
+  if failed host 127.0.0.1 port 18080 then restart
+  if 5 restarts within 5 cycles then timeout
