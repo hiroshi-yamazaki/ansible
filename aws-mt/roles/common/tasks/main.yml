@@ -1,0 +1,22 @@
+---
+- file:
+    src: /usr/share/zoneinfo/Asia/Tokyo
+    dest: /etc/localtime
+    state: link
+    force: yes
+- copy:
+    src: clock
+    dest: /etc/sysconfig/clock
+- name: yum update
+  yum: name=* state=latest
+- name: install common packages
+  yum: name={{item}} state=present
+  with_items:
+    - postfix
+    - mysql
+    - mailx
+
+- name: yum remove sendmail
+  yum: name=sendmail state=absent
+- name: chkconfig postfix
+  service: name=postfix state=running enabled=yes

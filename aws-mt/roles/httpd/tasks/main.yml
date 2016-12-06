@@ -1,0 +1,10 @@
+---
+- name: install httpd
+  yum: name={{item}} state=present
+  with_items:
+    - httpd24
+    - httpd24-tools
+    - mod24_ssl
+- name: run httpd
+  service: name=httpd state=started enabled=yes
+

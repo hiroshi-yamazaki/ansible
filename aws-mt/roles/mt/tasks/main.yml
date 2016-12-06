@@ -1,0 +1,48 @@
+---
+- name: install perl
+  yum: name={{item}} state=present
+  with_items:
+    - perl-YAML
+    - perl-IPC-Run
+    - perl-Archive-Zip
+    - perl-GD
+    - perl-Archive-Tar
+    - perl-XML-Parser 
+    - perl-Digest-SHA1 
+    - perl-Mail-Sendmail 
+    - perl-File-Which 
+    - perl-HTTP-Date 
+    - perl-Time-HiRes 
+    - perl-Data-Dump 
+    - perl-Devel-StackTrace 
+    - perl-MailTools 
+    - perl-CGI 
+    - perl-File-pushd 
+    - perl-MIME-Lite 
+    - perl-Try-Tiny 
+    - perl-File-Copy-Recursive 
+    - perl-IO-String 
+    - perl-HTTP-Message 
+    - perl-XML-NamespaceSupport 
+    - perl-XML-SAX-Base 
+    - perl-XML-SAX 
+    - perl-XML-LibXML 
+    - perl-Cache-Memcached 
+    - perl-Crypt-SSLeay 
+    - perl-Authen-SASL 
+    - perl-Class-Accessor 
+    - perl-SOAP-Lite 
+    - perl-YAML-Syck 
+    - perl-Test-Fatal 
+    - perl-HTML-Format 
+    - perl-JSON 
+    - perl-JSON-XS 
+    - perl-Module-Load 
+    - perl-CPAN-Meta 
+    - perl-ExtUtils-Embed 
+    - perl-DBI 
+    - perl-DBD-MySQL 
+    - perl-XML-Simple 
+    - perl-Mozilla-CA
+    - expat-devel 
+    - ImageMagick-perl 

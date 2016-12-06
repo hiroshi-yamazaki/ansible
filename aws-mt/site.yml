@@ -1,0 +1,9 @@
+---
+- hosts: all
+  user: ec2-user
+  become: yes
+  roles:
+    - swap
+    - common
+    - httpd
+    - mt
