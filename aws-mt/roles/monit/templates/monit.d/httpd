@@ -1,0 +1,5 @@
+check process httpd with pidfile "/var/run/httpd/httpd.pid"
+  start program = "/etc/init.d/httpd start"
+  stop program = "/etc/init.d/httpd stop"
+  if failed port 80 protocol http then restart
+  if 10 restarts within 10 cycles then timeout

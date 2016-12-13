@@ -1,2 +1,4 @@
-document_root: /var/www/movabletype
-
+server_name: xxx.xxx.xxx
+server_alias: 
+mpm_type: event #[ prefork | worker | event ]
+alert_email: foo@example.com

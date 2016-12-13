@@ -1,0 +1,5 @@
+check filesystem rootfs with path /dev/xvda1
+  if space usage > 85% for 5 times within 15 cycles then alert
+
+#check system localhost
+#  if memory usage > 95% then alert

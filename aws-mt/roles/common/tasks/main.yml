@@ -1,22 +1,42 @@
 ---
-- file:
+- name: timezone
+  file:
     src: /usr/share/zoneinfo/Asia/Tokyo
     dest: /etc/localtime
     state: link
     force: yes
-- copy:
+
+- name: clock
+  copy:
     src: clock
     dest: /etc/sysconfig/clock
+
+- name: logrotate.conf
+  copy:
+    src: logrotate.conf
+    dest: /etc/logrotate.conf
+
 - name: yum update
-  yum: name=* state=latest
+  yum: 
+    name: '*'
+    state: latest
+
 - name: install common packages
-  yum: name={{item}} state=present
+  yum: 
+    name: "{{ item }}"
+    state: present
   with_items:
     - postfix
     - mysql
     - mailx
 
 - name: yum remove sendmail
-  yum: name=sendmail state=absent
+  yum: 
+    name: sendmail
+    state: absent
+
 - name: chkconfig postfix
-  service: name=postfix state=running enabled=yes
+  service: 
+    name: postfix
+    state: running
+    enabled: yes

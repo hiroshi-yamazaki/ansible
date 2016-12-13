@@ -1,6 +1,8 @@
 ---
 - name: install perl
-  yum: name={{item}} state=present
+  yum:
+    name: "{{ item }}"
+    state: present
   with_items:
     - perl-YAML
     - perl-IPC-Run

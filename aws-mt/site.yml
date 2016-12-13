@@ -7,3 +7,4 @@
     - common
     - httpd
     - mt
+    - monit
