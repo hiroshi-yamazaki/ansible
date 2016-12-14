@@ -8,6 +8,11 @@
     - httpd24-tools
     - mod24_ssl
 
+- name: put logrotate.d/httpd
+  template:
+    src: logrotate.d/httpd
+    dest: /etc/logrotate.d/httpd
+
 - name: create document root
   file: 
     path: /var/www/{{ server_name }}
@@ -49,7 +54,25 @@
     - mpm.conf
   notify: reload httpd
 
-- name: put logrotate.d/httpd
+- name: create ssl files dir
+  file:
+    path: /etc/httpd/conf/ssl/
+    state: directory
+  when: use_ssl
+
+- name: put ssl files
+  copy:
+    src: ssl/{{ item }}
+    dest: /etc/httpd/conf/ssl/{{ item }}
+  with_items:
+    - server.key
+    - server.pem
+    - server-ca.pem
+  when: use_ssl
+
+- name: put conf.d/ssl.conf
   template:
-    src: logrotate.d/httpd
-    dest: /etc/logrotate.d/httpd
+    src: conf.d/ssl.conf
+    dest: /etc/httpd/conf.d/ssl.conf
+  when: use_ssl
+  notify: reload httpd

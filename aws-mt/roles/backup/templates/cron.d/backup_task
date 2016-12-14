@@ -1,0 +1,11 @@
+#!/bin/bash
+
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO={{ alert_email }}
+HOME=/root
+## if use custom profile
+#AWS_SHARED_CREDENTIALS_FILE="$HOME/.aws/credentials"
+
+0  1 * * * root /usr/bin/python /root/bin/create_snapshot.py
+30 2 * * * root /bin/bash /root/bin/s3backup.sh

@@ -1,0 +1,20 @@
+---
+- name: mkdir /root/bin
+  file: 
+    path: /root/bin
+    state: directory
+
+- name: put s3backup
+  template:
+    src: bin/s3backup.sh
+    dest: /root/bin/s3backup.sh
+
+- name: put create_snapshot.py
+  template:
+    src: bin/create_snapshot.py
+    dest: /root/bin/create_snapshot.py
+
+- name: put cron.d/backup_task
+  template:
+    src: cron.d/backup_task
+    dest: /etc/cron.d/backup_task

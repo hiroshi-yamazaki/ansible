@@ -1,4 +1,21 @@
 server_name: xxx.xxx.xxx
 server_alias: 
 mpm_type: event #[ prefork | worker | event ]
-alert_email: foo@example.com
+use_ssl: false #[ true | false ]
+
+alert_email: hiroshi.yamazaki@jp.oro.com
+
+rds:
+  dbhost: xxxxxxx
+  dbname: dbname
+  dbuser: username
+  dbpass: userpass
+
+s3:
+  dir: xxxxx
+
+ec2:
+  region: ap-northeast-1
+  tag_name: xxxx
+  secret_key: bbbb
+  access_key: cccc

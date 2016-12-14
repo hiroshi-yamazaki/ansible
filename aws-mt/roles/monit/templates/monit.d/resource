@@ -1,5 +1,13 @@
-check filesystem rootfs with path /dev/xvda1
-  if space usage > 80% for 5 times within 15 cycles then alert
+check filesystem rootfs with path /dev/xvda1 every 10 cycles
+  if space usage > 80% then alert
+  if space usage > 80% for 10 cycles then unmonitor
 
-#check system localhost
+check system localhost
+  if loadavg (5min) > 10 then alert
+  if loadavg (5min) > 10 for 10 cycles then unmonitor
+
 #  if memory usage > 95% then alert
+#  if memory usage > 95% for 10 cycles then unmonitor
+
+  if swap usage > 25% then alert
+  if swap usage > 25% for 10 cycles then unmonitor
