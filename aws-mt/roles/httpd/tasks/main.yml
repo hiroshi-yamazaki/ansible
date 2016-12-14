@@ -21,12 +21,6 @@
     group: root
     mode: 0755
 
-- name: run httpd
-  service: 
-    name: httpd
-    state: started
-    enabled: yes
-
 - name: put conf.modules.d/*.conf
   template:
     src: conf.modules.d/{{ item }}
@@ -40,7 +34,7 @@
   template: 
     src: conf/httpd.conf
     dest: /etc/httpd/conf/httpd.conf
-  notify: reload httpd
+  #notify: reload httpd
 
 - name: put conf.d/*.conf
   template:
@@ -51,7 +45,12 @@
     - default.conf
     - deflate.conf
     - htpasswd.conf
-    - mpm.conf
+  #notify: reload httpd
+
+- name: put conf.d/mpm.conf
+  template:
+    src: conf.d/mpm-{{ instance }}.conf
+    dest: /etc/httpd/conf.d/mpm.conf
   notify: reload httpd
 
 - name: create ssl files dir
@@ -76,3 +75,9 @@
     dest: /etc/httpd/conf.d/ssl.conf
   when: use_ssl
   notify: reload httpd
+
+- name: run httpd
+  service: 
+    name: httpd
+    state: started
+    enabled: yes

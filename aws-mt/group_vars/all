@@ -5,6 +5,8 @@ use_ssl: false #[ true | false ]
 
 alert_email: hiroshi.yamazaki@jp.oro.com
 
+instance: medium #[ small | medium | large ]
+
 rds:
   dbhost: xxxxxxx
   dbname: dbname
