@@ -9,10 +9,10 @@ backup_dir=/root/backup
 s3_dir={{ s3.dir }}
 today=`date '+%Y%m%d'`
 
-dbname={{ rds.dbname }}
-dbuser={{ rds.dbuser }}
-dbpass={{ rds.dbpass }}
-dbhost="{{ rds.dbhost }}"
+dbname='{{ rds.dbname }}'
+dbuser='{{ rds.dbuser }}'
+dbpass='{{ rds.dbpass }}'
+dbhost='{{ rds.dbhost }}'
 
 today_dir=${backup_dir}/${today}
 
@@ -21,7 +21,7 @@ then
   mkdir -p ${today_dir}
 fi
 
-/usr/bin/mysqldump -u ${dbuser} -p --password=${dbpass} -h ${dbhost} ${dbname} | gzip > ${today_dir}/${dbname}_${today}.sql.gz
+/usr/bin/mysqldump -u ${dbuser} --password=${dbpass} -h ${dbhost} ${dbname} | gzip > ${today_dir}/${dbname}_${today}.sql.gz
 
 ## if use custom profile
 #aws s3 cp ${today_dir}/ s3://${s3_dir}/${today}/db --recursive --profile s3 > /dev/null
