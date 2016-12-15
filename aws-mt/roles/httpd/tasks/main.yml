@@ -18,8 +18,14 @@
     path: /var/www/{{ server_name }}
     state: directory
     owner: root
-    group: root
-    mode: 0755
+    group: apache
+    mode: 0775
+
+- name: chmod g+s document root
+  file:
+    path: /var/www/{{ server_name }}
+    state: directory
+    mode: "g+s"
 
 - name: put conf.modules.d/*.conf
   template:
@@ -34,7 +40,6 @@
   template: 
     src: conf/httpd.conf
     dest: /etc/httpd/conf/httpd.conf
-  #notify: reload httpd
 
 - name: put conf.d/*.conf
   template:
@@ -45,13 +50,11 @@
     - default.conf
     - deflate.conf
     - htpasswd.conf
-  #notify: reload httpd
 
 - name: put conf.d/mpm.conf
   template:
     src: conf.d/mpm-{{ instance }}.conf
     dest: /etc/httpd/conf.d/mpm.conf
-  notify: reload httpd
 
 - name: create ssl files dir
   file:
@@ -74,7 +77,6 @@
     src: conf.d/ssl.conf
     dest: /etc/httpd/conf.d/ssl.conf
   when: use_ssl
-  notify: reload httpd
 
 - name: run httpd
   service: 
