@@ -83,3 +83,9 @@
     name: httpd
     state: started
     enabled: yes
+
+- name: usermod ec2-user
+  user:
+    name: ec2-user
+    groups: apache
+    append: yes
