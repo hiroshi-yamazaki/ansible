@@ -48,3 +48,21 @@
     - perl-Mozilla-CA
     - expat-devel 
     - ImageMagick-perl 
+
+- name: install cpanm, gcc
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - perl-App-cpanminus
+    - gcc
+
+- name: install cpanm modules
+  cpanm:
+    name: "{{ item }}"
+  with_items:
+    - Cache::File
+    - Crypt::DSA
+    - Imager
+    - XML::SAX::Expat
+    - XML::SAX::ExpatXS
