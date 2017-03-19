@@ -1,0 +1,6 @@
+# postfix
+check process postfix with pidfile "/var/spool/postfix/pid/master.pid"
+  start program = "/usr/sbin/service postfix start"
+  stop program  = "/usr/sbin/service postfix stop"
+  if failed host localhost port 25 type tcp protocol smtp with timeout 15 seconds then restart
+  if 10 restarts with 10 cycles then timeout

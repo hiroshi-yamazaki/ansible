@@ -7,5 +7,5 @@
     - php
     - nginx
     - mariadb
-    #- monit
+    - monit
     #- backup

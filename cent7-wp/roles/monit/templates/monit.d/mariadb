@@ -1,0 +1,6 @@
+check process mysqld matching "/usr/sbin/mysqld"
+  start program = "/usr/sbin/service mariadb start"
+  stop program = "/usr/sbin/service mariadb stop"
+  if failed
+    unixsocket /var/lib/mysql/mysql.sock
+  then alert
