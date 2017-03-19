@@ -26,8 +26,13 @@
     name: sendmail
     state: absent
 
-- name: chkconfig postfix
+- name: enable postfix
   service: 
     name: postfix
     state: running
+    enabled: yes
+
+- name: enable chronyd
+  service:
+    name: chronyd
     enabled: yes

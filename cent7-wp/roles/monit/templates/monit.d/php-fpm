@@ -1,3 +1,3 @@
-check process php-fpm matching "php-fpm"
+check process php-fpm with pidfile "/var/opt/rh/rh-php70/run/php-fpm/php-fpm.pid"
   start program = "/usr/sbin/service rh-php70-php-fpm start"
   stop program  = "/usr/sbin/service rh-php70-php-fpm stop"

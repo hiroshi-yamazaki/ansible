@@ -8,4 +8,4 @@
     - nginx
     - mariadb
     - monit
-    #- backup
+    - wordpress
