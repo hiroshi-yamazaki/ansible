@@ -1,5 +1,5 @@
 ---
-- name: restart php-fpm 
+- name: restart php-fpm
   service:
     name: rh-php70-php-fpm
     state: restarted
