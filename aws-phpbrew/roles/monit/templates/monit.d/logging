@@ -1,0 +1,2 @@
+# log to monit.log
+set logfile /var/log/monit
