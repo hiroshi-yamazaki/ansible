@@ -1,0 +1,4 @@
+check process crond with pidfile "/var/run/crond.pid"
+  start program = "/usr/sbin/service crond start"
+  stop program = "/usr/sbin/service crond stop"
+  if 5 restarts within 5 cycles then alert

@@ -1,0 +1,45 @@
+---
+- name: put mariadb.repo
+  copy:
+    src: mariadb.repo
+    dest: /etc/yum.repos.d/mariadb.repo
+
+- name: install MariaDB-server
+  yum:
+    name: "{{ item }}"
+  with_items:
+    - MariaDB-client
+    - MariaDB-server
+    - MySQL-python
+
+- name: enable mariadb
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: change root password
+  mysql_user:
+    name: root
+    host: "{{ db.host }}"
+    password: "{{ db.root_password }}"
+    login_user: root
+    login_password: "{{ db.root_password }}"
+    check_implicit_admin: yes
+
+- name: create mysql database
+  mysql_db:
+    name: "{{ db.name }}"
+    state: present
+    login_user: root
+    login_password: "{{ db.root_password }}"
+
+- name: create mysql user
+  mysql_user:
+    name: "{{ db.user }}"
+    host: "{{ db.host }}"
+    password: "{{ db.pass }}"
+    login_user: root
+    login_password: "{{ db.root_password }}"
+    priv: "{{ db.name }}.*:ALL"
+    state: present

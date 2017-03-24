@@ -1,0 +1,30 @@
+---
+- name: check wp-login.php
+  stat: 
+    path: "/var/www/{{ server_name }}/wp-login.php"
+  register: wplogin
+
+- name: put wordpress
+  get_url:
+    url: https://ja.wordpress.org/latest-ja.tar.gz
+    dest: /tmp/latest-ja.tar.gz
+  when: not wplogin.stat.exists
+
+- name: extract wordpress
+  unarchive:
+    remote_src: yes
+    src: /tmp/latest-ja.tar.gz
+    dest: /var/www/
+    owner: nginx
+    group: nginx
+  when: not wplogin.stat.exists
+
+- name: mv wordpress/*
+  shell: mv /var/www/wordpress/* /var/www/{{ server_name }}
+  when: not wplogin.stat.exists
+
+- name: rm -R wordpress
+  file:
+    path: /var/www/wordpress
+    state: absent
+  when: not wplogin.stat.exists

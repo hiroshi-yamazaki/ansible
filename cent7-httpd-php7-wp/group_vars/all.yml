@@ -1,0 +1,12 @@
+server_name: xxx.xxx.xxx
+server_alias: 
+use_ssl: false #[ true | false ]
+
+alert_email: hiroshi.yamazaki@jp.oro.com
+
+db:
+  root_password: 1234qwer
+  host: localhost
+  name: dbname
+  user: username
+  pass: userpass

@@ -1,0 +1,10 @@
+set daemon 60
+set logfile syslog
+set mailserver localhost
+set alert {{ alert_email }}
+
+set httpd port 2812
+  allow localhost
+  allow 124.39.135.110
+
+include /etc/monit.d/*

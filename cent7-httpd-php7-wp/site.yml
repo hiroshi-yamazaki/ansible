@@ -1,0 +1,11 @@
+---
+- hosts: all
+  user: root
+  roles:
+    - swap
+    - common
+    - php
+    - httpd
+    - mariadb
+    - monit
+    - wordpress

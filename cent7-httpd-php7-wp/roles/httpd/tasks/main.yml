@@ -1,0 +1,32 @@
+---
+- name: install httpd
+  yum: 
+    name: "{{ item }}"
+  with_items:
+    - httpd
+
+- name: enable httpd
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: create document_root
+  file:
+    path: "/var/www/{{ server_name }}"
+    state: directory
+    owner: apache
+    group: apache
+    mode: "g+w,g+s"
+
+# - name: put httpd.conf
+#   template:
+#     src: httpd.conf
+#     dest: /etc/httpd/conf/httpd.conf
+#   notify: restart httpd
+
+# - name: put /etc/httpd/conf.d/default.conf
+#   template:
+#     src: conf.d/default.conf
+#     dest: /etc/httpd/conf.d/default.conf
+#   notify: restart httpd 

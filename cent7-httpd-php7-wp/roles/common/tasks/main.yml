@@ -1,0 +1,38 @@
+---
+- name: logrotate.conf
+  copy:
+    src: logrotate.conf
+    dest: /etc/logrotate.conf
+
+- name: yum update
+  yum: 
+    name: '*'
+    state: latest
+
+- name: install common packages
+  yum: 
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - postfix
+    - mysql
+    - mailx
+    - git
+    - epel-release
+    - centos-release-scl
+
+- name: yum remove sendmail
+  yum: 
+    name: sendmail
+    state: absent
+
+- name: enable postfix
+  service: 
+    name: postfix
+    state: running
+    enabled: yes
+
+- name: enable chronyd
+  service:
+    name: chronyd
+    enabled: yes

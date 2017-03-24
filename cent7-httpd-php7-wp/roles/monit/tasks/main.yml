@@ -1,0 +1,31 @@
+---
+- name: install monit
+  yum: 
+    name: monit
+    state: present
+
+- name: enable monit
+  service: 
+    name: monit
+    state: started
+    enabled: yes
+
+- name: put monitrc
+  template:
+    src: monitrc
+    dest: /etc/monitrc
+  notify: restart monit
+
+- name: put monit.d
+  template:
+    src: monit.d/{{ item }}
+    dest: /etc/monit.d/{{ item }}
+  with_items:
+    - crond
+    - mailformat
+    - mariadb
+    - nginx
+    - php-fpm
+    - postfix
+    - resource
+  notify: restart monit
