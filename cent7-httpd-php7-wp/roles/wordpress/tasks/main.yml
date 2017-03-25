@@ -15,8 +15,8 @@
     remote_src: yes
     src: /tmp/latest-ja.tar.gz
     dest: /var/www/
-    owner: nginx
-    group: nginx
+    owner: apache
+    group: apache
   when: not wplogin.stat.exists
 
 - name: mv wordpress/*

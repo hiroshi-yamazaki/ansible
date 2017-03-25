@@ -4,6 +4,8 @@
     name: "{{ item }}"
   with_items:
     - httpd
+    - mod_ssl
+    - mod_fcgid
 
 - name: enable httpd
   service:
@@ -19,14 +21,31 @@
     group: apache
     mode: "g+w,g+s"
 
-# - name: put httpd.conf
-#   template:
-#     src: httpd.conf
-#     dest: /etc/httpd/conf/httpd.conf
-#   notify: restart httpd
+- name: put httpd.conf
+  template:
+    src: conf/httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
+  notify: restart httpd
 
-# - name: put /etc/httpd/conf.d/default.conf
-#   template:
-#     src: conf.d/default.conf
-#     dest: /etc/httpd/conf.d/default.conf
-#   notify: restart httpd 
+- name: put conf.modules.d/*.conf
+  template:
+    src: conf.modules.d/{{ item }}
+    dest: /etc/httpd/conf.modules.d/{{ item }}
+  with_items:
+    - 00-base.conf
+    - 00-dav.conf
+    - 00-mpm.conf
+    - 00-proxy.conf
+  notify: restart httpd
+
+- name: put /etc/httpd/conf.d/*.conf
+  template:
+    src: conf.d/{{ item }}
+    dest: /etc/httpd/conf.d/{{ item }}
+  with_items:
+    - autoindex.conf
+    - default.conf
+    - deflate.conf
+    - userdir.conf
+    - welcome.conf
+  notify: restart httpd

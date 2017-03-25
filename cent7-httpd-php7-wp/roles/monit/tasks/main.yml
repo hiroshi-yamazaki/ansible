@@ -22,9 +22,9 @@
     dest: /etc/monit.d/{{ item }}
   with_items:
     - crond
+    - httpd
     - mailformat
     - mariadb
-    - nginx
     - php-fpm
     - postfix
     - resource
