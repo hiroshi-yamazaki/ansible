@@ -46,6 +46,7 @@
     - autoindex.conf
     - default.conf
     - deflate.conf
+    - ssl.conf
     - userdir.conf
     - welcome.conf
   notify: restart httpd
