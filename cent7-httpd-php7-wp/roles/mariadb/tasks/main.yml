@@ -18,6 +18,12 @@
     state: started
     enabled: yes
 
+- name: put my.cnf.d/server.cnf
+  template:
+    src: my.cnf.d/server.cnf
+    dest: /etc/my.cnf.d/server.cnf
+  notify: restart mariadb
+
 - name: change root password
   mysql_user:
     name: root
