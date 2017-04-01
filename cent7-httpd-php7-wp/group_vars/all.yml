@@ -4,6 +4,8 @@ use_ssl: false #[ true | false ]
 
 alert_email: hiroshi.yamazaki@jp.oro.com
 
+instance: micro #[ micro | small | medium | large ]
+
 db:
   root_password: 1234qwer
   host: localhost

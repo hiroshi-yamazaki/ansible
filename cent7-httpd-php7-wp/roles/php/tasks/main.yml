@@ -29,7 +29,13 @@
     src: php.ini
     dest: /etc/opt/rh/rh-php70/php.ini
 
-- name: put php.ini
+- name: put php-fpm.conf
+  template:
+    src: php-fpm.conf
+    dest: /etc/opt/rh/rh-php70/php-fpm.conf
+  notify: restart php-fpm
+
+- name: put php-fpm.d/www.conf
   template:
     src: php-fpm.d/www.conf
     dest: /etc/opt/rh/rh-php70/php-fpm.d/www.conf

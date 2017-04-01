@@ -50,3 +50,9 @@
     - userdir.conf
     - welcome.conf
   notify: restart httpd
+
+- name: put /etc/httpd/conf.d/mpm.conf
+  template:
+    src: conf.d/mpm-{{ instance }}.conf
+    dest: /etc/httpd/conf.d/mpm.conf
+  notify: restart httpd
