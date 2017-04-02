@@ -2,7 +2,7 @@
 - hosts: all
   user: root
   roles:
-    - swap
+    - { role: swap, when: "ansible_memtotal_mb < 4*1000" }
     - common
     - php
     - nginx
