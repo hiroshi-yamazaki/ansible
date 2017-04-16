@@ -1,0 +1,45 @@
+---
+- name: timezone
+  file:
+    src: /usr/share/zoneinfo/Asia/Tokyo
+    dest: /etc/localtime
+    state: link
+    force: yes
+
+- name: clock
+  copy:
+    src: clock
+    dest: /etc/sysconfig/clock
+
+- name: logrotate.conf
+  copy:
+    src: logrotate.conf
+    dest: /etc/logrotate.conf
+
+- name: install epel
+  yum:
+    name: epel-release
+
+- name: yum update
+  yum: 
+    name: '*'
+    state: latest
+
+- name: install common packages
+  yum: 
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - postfix
+    - mailx
+
+- name: yum remove sendmail
+  yum: 
+    name: sendmail
+    state: absent
+
+- name: chkconfig postfix
+  service: 
+    name: postfix
+    state: started
+    enabled: yes

@@ -1,0 +1,31 @@
+---
+- name: install monit
+  yum: 
+    name: monit
+    enablerepo: epel
+    state: present
+
+- name: run monit
+  service: 
+    name: monit
+    state: started
+    enabled: yes
+
+- name: put monit.conf
+  template:
+    src: monit.conf
+    dest: /etc/monit.conf
+  notify: reload monit
+
+- name: put monit.d
+  template:
+    src: monit.d/{{ item }}
+    dest: /etc/monit.d/{{ item }}
+  with_items:
+    - crond
+    - nginx
+    - logging
+    - mailformat
+    - postfix
+    - resource
+  notify: reload monit

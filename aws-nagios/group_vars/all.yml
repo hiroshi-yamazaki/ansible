@@ -1,0 +1,8 @@
+server_name: xxx.xxx.xxx
+server_alias: 
+mpm_type: event #[ prefork | worker | event ]
+use_ssl: false #[ true | false ]
+
+alert_email: hiroshi.yamazaki@jp.oro.com
+
+instance: medium #[ small | medium | large ]

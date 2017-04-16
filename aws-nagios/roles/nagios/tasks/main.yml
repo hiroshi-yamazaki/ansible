@@ -1,0 +1,9 @@
+---
+- name: install nagios
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - nagios
+    - nagios-plugins
+    - nagios-plugins-all

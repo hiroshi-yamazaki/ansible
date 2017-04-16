@@ -1,0 +1,11 @@
+---
+- hosts: all
+  # connection: local 
+  user: ec2-user
+  become: yes
+  roles:
+    - swap
+    - common
+    - nagios
+    - nginx
+    - monit
