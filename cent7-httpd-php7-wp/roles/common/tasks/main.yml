@@ -29,7 +29,7 @@
 - name: enable postfix
   service: 
     name: postfix
-    state: running
+    state: started
     enabled: yes
 
 - name: enable chronyd
